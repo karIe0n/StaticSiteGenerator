@@ -1,13 +1,13 @@
 import unittest
-from htmlnode import HTMLNode
+from src.htmlnode import HTMLNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_repr(self):
-        node = HTMLNode("div", "Hello, World!", {"class": "greeting"}, [])
+        node = HTMLNode("div", "Hello, World!", [], {"class": "greeting"})
         self.assertEqual(repr(node), "HTMLNode(tag=div, value=Hello, World!, props={'class': 'greeting'}, children=[])")
 
     def test_props_to_html(self):
-        node =  HTMLNode("div", None, {"class": "greeting", "id": "main"}, [])
+        node =  HTMLNode("div", None, [], {"class": "greeting", "id": "main"})
         self.assertEqual(node.props_to_html(), ' class="greeting" id="main"')
 
     def test_props_to_html_empty(self):
@@ -24,12 +24,12 @@ class TestHTMLNode(unittest.TestCase):
             node.to_html()
             
     def test_children_default(self):
-        node = HTMLNode("div", "Hello, World!", {"class": "greeting"}, None)
+        node = HTMLNode("div", "Hello, World!", None, {"class": "greeting"})
         self.assertEqual(node.children, [])
     
     def test_node_with_children(self):
-        child_node = HTMLNode("span", "Child", {"class": "child"}, [])
-        node = HTMLNode("div", "Hello, World!", {"class": "greeting"}, [child_node])
+        child_node = HTMLNode("span", "Child", [], {"class": "child"})
+        node = HTMLNode("div", "Hello, World!", [child_node], {"class": "greeting"})
         self.assertEqual(node.children, [child_node])
 
 
