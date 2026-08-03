@@ -1,4 +1,5 @@
 from src.textnode import TextNode, TextType
+import re
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
     new_nodes = []
@@ -21,3 +22,26 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
                 split_nodes.append(TextNode(sections[i], text_type))
         new_nodes.extend(split_nodes)
     return new_nodes
+
+def extract_markdown_images(text) -> list[tuple]:
+    matches = re.findall(r"!\[[\w ]+\]\(https:[/\w\d.]+\)", text)
+    result = []
+    for match in matches:
+        split = match.split("(")
+        new_tuple = (split[0].strip("![]"), split[1].strip(")"))
+        result.append(new_tuple)
+    return result
+
+def extract_markdown_links(text) -> list[tuple]:
+    matches = re.findall(r"\[[\w ]+\]\(https[\w:/.@]+\)", text)
+    result = []
+    for match in matches:
+        split = match.split("(")
+        new_tuple = (split[0].strip("[]"), split[1].strip(")"))
+        result.append(new_tuple)
+    return result
+
+def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
+    
+    
+def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
