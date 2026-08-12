@@ -1,5 +1,5 @@
 import unittest
-from src.functions import extract_markdown_links
+from src.inline_functions import extract_markdown_links
 
 class TestExtractMarkdownLinks(unittest.TestCase):
     def test_extract_markdown_links(self):

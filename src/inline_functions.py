@@ -7,8 +7,6 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
         if old_node.text_type != TextType.TEXT:
             new_nodes.append(old_node)
             continue
-        if delimiter not in old_node.text:
-            raise Exception("delimiter is not found in the text node")
         split_nodes = []
         sections = old_node.text.split(delimiter)
         if len(sections) % 2 == 0:
@@ -92,4 +90,12 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
             original_text = sections[1]
         if original_text != "":
             new_nodes.append(TextNode(original_text, TextType.TEXT))
+    return new_nodes
+
+def text_to_textnodes(old_nodes: list[TextNode]) -> list[TextNode]:
+    new_nodes = split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
+    new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
+    new_nodes = split_nodes_delimiter(new_nodes, "`", TextType.CODE)
+    new_nodes = split_nodes_image(new_nodes)
+    new_nodes = split_nodes_link(new_nodes)
     return new_nodes
