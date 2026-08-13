@@ -7,4 +7,3 @@ def markdown_to_blocks(markdown: str) -> list[str]:
             continue
         new_blocks.append(block.strip())
     return new_blocks
-    
